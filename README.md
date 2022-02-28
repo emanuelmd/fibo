@@ -1,6 +1,11 @@
 # Fibo
 
-To start your Phoenix server:
+## Prerequisits
+
+  * Have postgres up and running
+  * Elixir version 1.12
+
+## Running the server
 
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.setup`
@@ -8,12 +13,16 @@ To start your Phoenix server:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## Running tests
 
-## Learn more
+  * Install dependencies wtih `mix deps.get`
+  * Run tests using `mix test`
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+# API endpoints
+
+  * `GET    /api/fibonacci/nth/:number` -> Retreives the nth fibonacci number from the sequence
+  * `GET    /api/fibonacci/:number`     -> Returns 200 and no body if the number is a fibonacci number and it's not blacklisted (otherwise 404)
+  * `GET    /api/blacklist`             -> Retrieves the blacklist
+  * `POST   /api/blacklist/:number`     -> Adds a fibonacci number to the blacklist.
+  * `DELETE /api/blacklist/:number`     -> Removes a fibonacci number from the blacklist
+

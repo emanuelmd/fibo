@@ -7,6 +7,8 @@ defmodule FiboWeb.Router do
 
   scope "/api", FiboWeb do
     pipe_through :api
+
+    get "/fibonacci/nth/:number", FibonacciController, :nth
   end
 
   # Enables LiveDashboard only for development

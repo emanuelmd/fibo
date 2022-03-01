@@ -32,7 +32,7 @@ defmodule Fibo.Blacklist do
            true <- Fibonacci.fibonacci?(n) do
         []
       else
-        _ -> [number: "Provided number is not part of the fibonacci"]
+        _ -> [number: "Provided value is not part of the fibonacci sequence"]
       end
     end)
   end
@@ -55,7 +55,11 @@ defmodule Fibo.Blacklist do
   # Repo definition
 
   def exists?(n) when is_integer(n) do
-    query = from entry in Blacklist, where: entry.number == ^to_string(n)
+    exists?(to_string(n))
+  end
+
+  def exists?(n) do
+    query = from entry in Blacklist, where: entry.number == ^n
     Repo.exists?(query)
   end
 
@@ -68,6 +72,6 @@ defmodule Fibo.Blacklist do
   def add(cs = %Ecto.Changeset{valid?: false}), do: cs
   def add(cs = %Ecto.Changeset{valid?: true}), do: Repo.insert(cs)
 
-  def remove(_n) do
-  end
+  def remove(n) when is_integer(n), do: remove(to_string(n))
+  def remove(n), do: Repo.delete_all(from entry in Blacklist, where: entry.number == ^n)
 end

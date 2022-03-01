@@ -8,8 +8,13 @@ defmodule FiboWeb.Router do
   scope "/api", FiboWeb do
     pipe_through :api
 
-    get "/fibonacci/nth/:number", FibonacciController, :nth
     get "/fibonacci", FibonacciController, :list
+    get "/fibonacci/:number", FibonacciController, :show
+    get "/fibonacci/nth/:number", FibonacciController, :nth
+
+    get "/blacklist", BlacklistController, :list
+    post "/blacklist/:number", BlacklistController, :create
+    delete "/blacklist/:number", BlacklistController, :remove
   end
 
   # Enables LiveDashboard only for development

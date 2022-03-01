@@ -18,7 +18,7 @@ defmodule Fibo.Fibonacci do
     |> first()
   end
 
-  def fibonacci?(number) do
+  def fibonacci?(number) when is_integer(number) do
     fibo_number =
       stream()
       |> Stream.drop_while(&(&1 < number))

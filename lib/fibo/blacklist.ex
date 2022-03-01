@@ -1,4 +1,9 @@
 defmodule Fibo.Blacklist do
+
+  @moduledoc """
+  A repository (and schema) that allows interacting with the blacklist
+  """
+
   use Ecto.Schema
 
   import Ecto.Query

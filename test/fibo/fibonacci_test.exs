@@ -29,6 +29,6 @@ defmodule FibonacciTest do
     |> Enum.each(fn n -> assert Fibonacci.fibonacci?(n) end)
 
     [99, 4, 202, 145, 733]
-    |> Enum.each(fn n -> assert not Fibonacci.fibonacci?(n) end)
+    |> Enum.each(fn n -> refute Fibonacci.fibonacci?(n) end)
   end
 end

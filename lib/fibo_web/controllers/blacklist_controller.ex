@@ -16,7 +16,9 @@ defmodule FiboWeb.BlacklistController do
       |> text(nil)
     else
 
-      error_message = Ecto.Changeset.traverse_errors(cs, fn {msg, _} -> msg end)[:number] |> Enum.join("; ")
+      error_message = Ecto.Changeset.traverse_errors(cs, fn {msg, _} -> msg end)
+      |> Map.get(:number)
+      |> Enum.join("; ")
 
       put_status(conn, 400)
       |> text(error_message)

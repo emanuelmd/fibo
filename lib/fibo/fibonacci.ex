@@ -1,12 +1,18 @@
 defmodule Fibo.Fibonacci do
+  @moduledoc """
+  A module that implements utilities around generating fibonacci numbers.
+  """
 
+  @doc """
+  An infinite stream that generates fibonacci numbers
+  """
   def stream do
     Stream.unfold({0, 1}, fn
       {prev, current} -> {prev, {current, current + prev}}
     end)
   end
-
-  def first(stream) do
+  
+  defp first(stream) do
     stream
     |> Stream.take(1)
     |> Enum.at(0)

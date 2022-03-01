@@ -18,11 +18,16 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
   * Install dependencies wtih `mix deps.get`
   * Run tests using `mix test`
 
-# API endpoints
+## API endpoints
 
-  * `GET    /api/fibonacci/nth/:number` -> Retreives the nth fibonacci number from the sequence
-  * `GET    /api/fibonacci/:number`     -> Returns 200 and no body if the number is a fibonacci number and it's not blacklisted (otherwise 404)
-  * `GET    /api/blacklist`             -> Retrieves the blacklist
-  * `POST   /api/blacklist/:number`     -> Adds a fibonacci number to the blacklist.
-  * `DELETE /api/blacklist/:number`     -> Removes a fibonacci number from the blacklist
+  * `GET    /api/fibonacci?after=20&count=50` -> Returns a json 
+  * `GET    /api/fibonacci/:number`           -> Returns 200 and no body if the number is a fibonacci number and it's not blacklisted (otherwise 404)
+  * `GET    /api/fibonacci/nth/:number`       -> Retreives the nth fibonacci number from the sequence
+  * `GET    /api/blacklist`                   -> Retrieves the blacklist
+  * `POST   /api/blacklist/:number`           -> Adds a fibonacci number to the blacklist.
+  * `DELETE /api/blacklist/:number`           -> Removes a fibonacci number from the blacklist
+
+## Technical consideration
+
+* The numbers contained within the blacklist table are saved as strings because they are extremely large and don't fit into any Postgres's integer types.
 

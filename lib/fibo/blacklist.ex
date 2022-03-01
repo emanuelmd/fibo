@@ -44,6 +44,10 @@ defmodule Fibo.Blacklist do
     Repo.exists?(from(entry in Blacklist, where: entry.number == ^n))
   end
 
+  def list do
+    Repo.all(from b in Blacklist, select: b.number) |> MapSet.new()
+  end
+
   def add(cs = %Ecto.Changeset{valid?: false}), do: cs
   def add(cs = %Ecto.Changeset{valid?: true}), do: Repo.insert(cs)
 

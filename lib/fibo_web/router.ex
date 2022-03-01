@@ -9,6 +9,7 @@ defmodule FiboWeb.Router do
     pipe_through :api
 
     get "/fibonacci/nth/:number", FibonacciController, :nth
+    get "/fibonacci", FibonacciController, :list
   end
 
   # Enables LiveDashboard only for development

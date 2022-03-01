@@ -1,5 +1,4 @@
 defmodule Fibo.Blacklist do
-
   use Ecto.Schema
 
   import Ecto.Query
@@ -12,22 +11,37 @@ defmodule Fibo.Blacklist do
   @primary_key nil
 
   schema "fibo_blacklist" do
-    field :number, :integer
+    field :number, :string
+  end
+
+  def create_changeset(n) when is_integer(n) do
+    create_changeset(to_string(n))
   end
 
   def create_changeset(n) do
     %Blacklist{}
     |> Changeset.cast(%{"number" => n}, [:number])
     |> Changeset.unique_constraint(:number)
+    |> validate_is_number()
     |> validate_is_fibonacci()
   end
 
   defp validate_is_fibonacci(changeset) do
     Changeset.validate_change(changeset, :number, fn :number, n ->
-      if not Fibonacci.fibonacci?(n) do
-	[number: "Provided number is not a fibonacci number"]
+      with {n, ""} <- Integer.parse(n),
+           true <- Fibonacci.fibonacci?(n) do
+        []
       else
-	[]
+        _ -> [number: "Provided number is not part of the fibonacci"]
+      end
+    end)
+  end
+
+  defp validate_is_number(changeset) do
+    Changeset.validate_change(changeset, :number, fn :number, number ->
+      case Regex.run(~r/^\d+$/, number) do
+        [_] -> []
+        _ -> [number: "Please provide a number as a string"]
       end
     end)
   end
@@ -40,17 +54,20 @@ defmodule Fibo.Blacklist do
 
   # Repo definition
 
-  def exists?(n) do
-    Repo.exists?(from(entry in Blacklist, where: entry.number == ^n))
+  def exists?(n) when is_integer(n) do
+    query = from entry in Blacklist, where: entry.number == ^to_string(n)
+    Repo.exists?(query)
   end
 
   def list do
-    Repo.all(from b in Blacklist, select: b.number) |> MapSet.new()
+    Repo.all(from b in Blacklist, select: b.number)
+    |> Enum.map(&String.to_integer/1)
+    |> MapSet.new()
   end
 
   def add(cs = %Ecto.Changeset{valid?: false}), do: cs
   def add(cs = %Ecto.Changeset{valid?: true}), do: Repo.insert(cs)
 
-  def remove(n) do
+  def remove(_n) do
   end
 end

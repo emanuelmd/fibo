@@ -30,4 +30,6 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 ## Technical consideration
 
 * The numbers contained within the blacklist table are saved as strings because they are extremely large and don't fit into any Postgres's integer types.
+* When fetching a fibonacci list the max count you can request is 100. I chose this arbitrary number as a performance consideration, so one request doesn't hog too much computational power and also to avoid infinite loops
+* When fetching just one number or the nth number, there's only text response or no response at all, I think this makes a lot of sense considering there's just one number returned. Could be parametrized to json or other formats
 
